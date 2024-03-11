@@ -1,4 +1,5 @@
 import { pool } from "../database/connection.js";
+import bcrypt from 'bcrypt';
 import isValidEmail from "../helpers/isValidEmail.js";
 import isValidName from "../helpers/isValidName.js";
 import isValidUsername from "../helpers/isValidUsername.js";
@@ -21,6 +22,7 @@ const createUser = async (username, name, last_name, phone, password, verificati
 
         return {};
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const query = 'INSERT INTO "user" (username, name, last_name, phone, password, verification_code, email) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 
@@ -30,7 +32,7 @@ const createUser = async (username, name, last_name, phone, password, verificati
     //console.log(countUsername + "   " + countPhone);
 
     if(countUsername === 0 && countPhone === 0){
-        const { rows } = await pool.query(query, [username, name, last_name, phone, password, verification_code, email]);
+        const { rows } = await pool.query(query, [username, name, last_name, phone, hashedPassword, verification_code, email]);
         console.log("Insert user done");
         return rows[0];
     }
