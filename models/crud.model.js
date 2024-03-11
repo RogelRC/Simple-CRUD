@@ -1,4 +1,7 @@
 import { pool } from "../database/connection.js";
+import isValidEmail from "../helpers/isValidEmail.js";
+import isValidName from "../helpers/isValidName.js";
+import isValidUsername from "../helpers/isValidUsername.js";
 
 const getUsers = async () => {
     return await pool.query('SELECT * FROM "user"');
@@ -9,6 +12,16 @@ const getByID = async (id) => {
 }
 
 const createUser = async (username, name, last_name, phone, password, verification_code, email) => {
+
+    if(!isValidUsername(username) || !isValidName(name) || !isValidName(last_name) || !isValidEmail(email)){
+        if(!isValidUsername(username)) console.log("Invalid username");
+        if(!isValidName(name)) console.log("Invalid name");
+        if(!isValidName(last_name)) console.log("Invalid last name");
+        if(!isValidEmail(email)) console.log("Invalid email");
+
+        return {};
+    }
+
     const query = 'INSERT INTO "user" (username, name, last_name, phone, password, verification_code, email) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 
     const countUsername = parseInt((await pool.query('SELECT COUNT(*) FROM "user" WHERE username = $1', [username])).rows[0].count);
