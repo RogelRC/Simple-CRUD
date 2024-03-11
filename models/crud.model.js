@@ -60,7 +60,9 @@ const updateUser = async (username, name, last_name, phone, password, verificati
     else{
         const query = 'UPDATE "user" SET name = $1, last_name = $2, phone = $3, password = $4, verification_code = $5, email = $6 WHERE username = $7 RETURNING *';
 
-        return (await pool.query(query, [name, last_name, phone, password, verification_code, email, username])).rows[0];
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        return (await pool.query(query, [name, last_name, phone, hashedPassword, verification_code, email, username])).rows[0];
     }
 }
 
