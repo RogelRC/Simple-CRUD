@@ -26,9 +26,9 @@ const getByID = async (req, res)=> {
 
 const createUser = async(req, res) => {
     try{
-        const {username, name, last_name, phone, password, verification_code, email} = req.body;
+        const {username, name, last_name, phone, password, email} = req.body;
 
-        const response = await crudModel.createUser(username, name, last_name, phone, password, verification_code, email);
+        const response = await crudModel.createUser(username, name, last_name, phone, password, email);
 
         if(response) res.json(response);
     }
@@ -52,9 +52,9 @@ const deleteUser = async(req, res) => {
 
 const updateUser = async(req, res) => {
     try{
-        const {username, name, last_name, phone, password, verification_code, email} = req.body;
+        const {id_user, username, password} = req.body;
 
-        const response = (await crudModel.updateUser(username, name, last_name, phone, password, verification_code, email));
+        const response = (await crudModel.updateUser(id_user, username, password));
 
         res.json(response);
     }

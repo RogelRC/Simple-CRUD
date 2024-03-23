@@ -2,7 +2,6 @@
   "type": "module",
   "name": "crud",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
@@ -18,5 +17,14 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RogelRC/Simple-CRUD.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RogelRC/Simple-CRUD/issues"
+  },
+  "homepage": "https://github.com/RogelRC/Simple-CRUD#readme",
+  "description": ""
 }
